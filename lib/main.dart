@@ -1,13 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:sqflite/sqflite.dart' as sqfliteDataBase;
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  // get database in your app
+  String databasePath = await sqfliteDataBase.getDatabasesPath();
+ 
+
+  ///data/user/0/com.example.sqflite_department/databases
+  // make your database name (add this name to your path database)
+  String myDbName = 'test.db';
+  String myDbPath =
+      "$databasePath/$myDbName";
+  // open database (create database)
+  int versionDb = 1;
+  sqfliteDataBase.openDatabase(
+    myDbPath,
+    version: versionDb,
+    onCreate: ( db,int version) {
+      print(db);
+      print(version);
+    },
+  );
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
