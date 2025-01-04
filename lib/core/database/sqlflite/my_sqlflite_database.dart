@@ -17,7 +17,7 @@ class MySqlFliteDatabase extends Crud {
   final String _salesColumnUserName = 'sales_user_name';
   sqfliteDataBase.Database? _db;
 
-  Future<sqfliteDataBase.Database> initDatabase() async {
+  Future<sqfliteDataBase.Database> _initDatabase() async {
     String databasePath = await sqfliteDataBase.getDatabasesPath();
     String managamentDataBaseName = 'managament.db';
     String realDatabasePath = join(databasePath, managamentDataBaseName);
@@ -40,28 +40,33 @@ class MySqlFliteDatabase extends Crud {
   }
 
   @override
-  Future<int> delete() {
-    // TODO: implement delete
-    throw UnimplementedError();
+  Future<bool> delete()async {
+   await _initDatabase();
+   int deleted = await _db!.delete(_userTable, where: '$_userColumnID == 2');
+   await _db!.close();
+   return deleted>0? true :false;
   }
 
   @override
-  Future<int> insert()async {
+  Future<bool> insert()async {
     // TODO: implement insert
-   await initDatabase();
+   await _initDatabase();
    int inserted = await _db!.insert(_userTable, {'$_userColumnUserName': 'salah'});
-   return inserted;
+   await _db!.close();
+   return inserted>0? true :false;
   }
 
   @override
-  Future<int> select() {
+  Future<bool> select() {
     // TODO: implement select
     throw UnimplementedError();
   }
 
   @override
-  Future<int> update() {
-    // TODO: implement update
-    throw UnimplementedError();
+  Future<bool> update()async {
+    await _initDatabase();
+   int updated = await _db!.update(_userTable, {},);
+   await _db!.close();
+   return updated>0? true :false;
   }
 }

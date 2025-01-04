@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart' as sqfliteDataBase;
 import 'package:path/path.dart';
+import 'package:sqflite_department/core/database/sqlflite/my_sqlflite_database.dart';
 import 'package:sqflite_department/view/user_screen.dart';
 
 void main() async {
@@ -70,6 +71,11 @@ void main() async {
 //   // await myDatabase.execute("DROP TABLE IF EXISTS testtable");
 //   // await myDatabase.execute("INSERT INTO user VALUES (1, 'Ammar', 1000)");
 //   await myDatabase.close();
+ WidgetsFlutterBinding.ensureInitialized();
+ MySqlFliteDatabase db =MySqlFliteDatabase();
+ bool inserted = await db.delete();
+ print(inserted);
+
   runApp(const MyApp());
 }
 

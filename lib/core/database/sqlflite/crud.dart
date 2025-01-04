@@ -1,7 +1,7 @@
 abstract class Crud {
   // create , read , update , delete
-  Future<int> insert();
-  Future<int> update();
-  Future<int> delete();
-  Future<int> select();
+  Future<bool> insert();
+  Future<bool> update();
+  Future<bool> delete();
+  Future<bool> select();
 }
