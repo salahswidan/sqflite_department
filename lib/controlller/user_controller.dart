@@ -13,8 +13,8 @@ class UserController {
 
   void select() async {
     MySqlFliteDatabase db = MySqlFliteDatabase();
-    dataUser = await db.select();
-    
-   // print(dataUser);
+    dataUser = await db.selectUserTableData();
+
+    // print(dataUser);
   }
 }

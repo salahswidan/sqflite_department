@@ -44,18 +44,19 @@ class MySqlFliteDatabase extends Crud {
     return deleted > 0 ? true : false;
   }
 
- Future<bool> insertToUserTable({required String userName}) async {
-   return insert(tableName: _userTable, values: {
+  Future<bool> insertToUserTable({required String userName}) async {
+    return insert(tableName: _userTable, values: {
       _userColumnUserName: userName,
-    } );
+    });
   }
 
- Future<bool> insertToProductTable({required String name, required double price, required int count}) async {
-   return insert(tableName: _productTable, values: {
+  Future<bool> insertToProductTable(
+      {required String name, required double price, required int count}) async {
+    return insert(tableName: _productTable, values: {
       _productColumnName: name,
       _productColumnPrice: price,
       _productColumnCount: count,
-    } );
+    });
   }
 
   @override
@@ -69,9 +70,16 @@ class MySqlFliteDatabase extends Crud {
   }
 
   @override
-  Future<List<Map<String, Object?>>> select()async {
-     await _initDatabase();
-   List<Map<String, Object?>> data = await _db!.query(_userTable);
+  Future<List<Map<String, Object?>>> selectUserTableData() async {
+    return select(tableName: _userTable);
+  }
+  Future<List<Map<String, Object?>>> selectProductTableData() async {
+    return select(tableName: _productTable);
+  }
+
+  Future<List<Map<String, Object?>>> select({required String tableName}) async {
+    await _initDatabase();
+    List<Map<String, Object?>> data = await _db!.query(_userTable);
     await _db!.close();
     return data;
   }
