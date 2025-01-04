@@ -72,9 +72,6 @@ void main() async {
 //   // await myDatabase.execute("INSERT INTO user VALUES (1, 'Ammar', 1000)");
 //   await myDatabase.close();
  WidgetsFlutterBinding.ensureInitialized();
- MySqlFliteDatabase db =MySqlFliteDatabase();
- bool inserted = await db.delete();
- print(inserted);
 
   runApp(const MyApp());
 }

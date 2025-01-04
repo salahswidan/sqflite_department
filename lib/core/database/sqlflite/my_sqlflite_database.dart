@@ -22,12 +22,9 @@ class MySqlFliteDatabase extends Crud {
     String managamentDataBaseName = 'managament.db';
     String realDatabasePath = join(databasePath, managamentDataBaseName);
     int versionDataBase = 1;
-    _db ??= await sqfliteDataBase.openDatabase(
-        realDatabasePath,
-        onCreate: _onCreate,
-        version: versionDataBase
-        );
-        return _db!;
+    _db ??= await sqfliteDataBase.openDatabase(realDatabasePath,
+        onCreate: _onCreate, version: versionDataBase);
+    return _db!;
   }
 
   _onCreate(sqfliteDataBase.Database db, int version) async {
@@ -40,20 +37,35 @@ class MySqlFliteDatabase extends Crud {
   }
 
   @override
-  Future<bool> delete()async {
-   await _initDatabase();
-   int deleted = await _db!.delete(_userTable, where: '$_userColumnID == 2');
-   await _db!.close();
-   return deleted>0? true :false;
+  Future<bool> delete() async {
+    await _initDatabase();
+    int deleted = await _db!.delete(_userTable, where: '$_userColumnID == 2');
+    await _db!.close();
+    return deleted > 0 ? true : false;
+  }
+
+ Future<bool> insertToUserTable({required String userName}) async {
+   return insert(tableName: _userTable, values: {
+      _userColumnUserName: userName,
+    } );
+  }
+
+ Future<bool> insertToProductTable({required String name, required double price, required int count}) async {
+   return insert(tableName: _productTable, values: {
+      _productColumnName: name,
+      _productColumnPrice: price,
+      _productColumnCount: count,
+    } );
   }
 
   @override
-  Future<bool> insert()async {
+  Future<bool> insert(
+      {required String tableName, required Map<String, Object?> values}) async {
     // TODO: implement insert
-   await _initDatabase();
-   int inserted = await _db!.insert(_userTable, {'$_userColumnUserName': 'salah'});
-   await _db!.close();
-   return inserted>0? true :false;
+    await _initDatabase();
+    int inserted = await _db!.insert(tableName, values);
+    await _db!.close();
+    return inserted > 0 ? true : false;
   }
 
   @override
@@ -63,10 +75,13 @@ class MySqlFliteDatabase extends Crud {
   }
 
   @override
-  Future<bool> update()async {
+  Future<bool> update() async {
     await _initDatabase();
-   int updated = await _db!.update(_userTable, {},);
-   await _db!.close();
-   return updated>0? true :false;
+    int updated = await _db!.update(
+      _userTable,
+      {},
+    );
+    await _db!.close();
+    return updated > 0 ? true : false;
   }
 }
