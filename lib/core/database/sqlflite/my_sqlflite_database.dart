@@ -15,44 +15,52 @@ class MySqlFliteDatabase extends Crud {
   final String _salesColumnID = 'sales_id';
   final String _salesColumnProductName = 'sales_product_name';
   final String _salesColumnUserName = 'sales_user_name';
+  sqfliteDataBase.Database? _db;
 
-
-  initDatabase() async {
+  Future<sqfliteDataBase.Database> initDatabase() async {
     String databasePath = await sqfliteDataBase.getDatabasesPath();
     String managamentDataBaseName = 'managament.db';
     String realDatabasePath = join(databasePath, managamentDataBaseName);
     int versionDataBase = 1;
-    sqfliteDataBase.openDatabase(realDatabasePath,
-        onCreate: _onCreate, version: versionDataBase);
+    _db ??= await sqfliteDataBase.openDatabase(
+        realDatabasePath,
+        onCreate: _onCreate,
+        version: versionDataBase
+        );
+        return _db!;
   }
 
   _onCreate(sqfliteDataBase.Database db, int version) async {
-    await db.execute('CREATE TABLE $_userTable ($_userColumnID INTEGER, $_userColumnUserName TEXT);');
-    await db.execute('CREATE TABLE $_productTable ($_productColumnID INTEGER, $_productColumnName TEXT ,$_productColumnPrice REAL, $_productColumnCount INTEGER);');
-          await db.execute('CREATE TABLE $_salesTable ($_salesColumnID INTEGER, $_salesColumnProductName TEXT ,$_salesColumnUserName TEXT);');
-
+    await db.execute(
+        'CREATE TABLE IF NOT EXISTS $_userTable ($_userColumnID INTEGER PRIMARY KEY AUTOINCREMENT, $_userColumnUserName TEXT);');
+    await db.execute(
+        'CREATE TABLE IF NOT EXISTS $_productTable ($_productColumnID INTEGER PRIMARY KEY AUTOINCREMENT, $_productColumnName TEXT ,$_productColumnPrice REAL, $_productColumnCount INTEGER);');
+    await db.execute(
+        'CREATE TABLE  IF NOT EXISTS $_salesTable ($_salesColumnID INTEGER PRIMARY KEY AUTOINCREMENT, $_salesColumnProductName TEXT ,$_salesColumnUserName TEXT);');
   }
 
   @override
-  int delete() {
+  Future<int> delete() {
     // TODO: implement delete
     throw UnimplementedError();
   }
 
   @override
-  int insert() {
+  Future<int> insert()async {
     // TODO: implement insert
-    throw UnimplementedError();
+   await initDatabase();
+   int inserted = await _db!.insert(_userTable, {'$_userColumnUserName': 'salah'});
+   return inserted;
   }
 
   @override
-  int select() {
+  Future<int> select() {
     // TODO: implement select
     throw UnimplementedError();
   }
 
   @override
-  int update() {
+  Future<int> update() {
     // TODO: implement update
     throw UnimplementedError();
   }
