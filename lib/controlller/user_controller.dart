@@ -8,12 +8,13 @@ class UserController {
   void insertUser({required String userName}) async {
     MySqlFliteDatabase db = MySqlFliteDatabase();
     bool inserted = await db.insertToUserTable(userName: userName);
-    print(inserted);
+    select();
   }
 
   void select() async {
     MySqlFliteDatabase db = MySqlFliteDatabase();
     dataUser = await db.select();
-    print(dataUser);
+    
+   // print(dataUser);
   }
 }

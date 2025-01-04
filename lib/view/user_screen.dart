@@ -19,34 +19,47 @@ class _UserScreenState extends State<UserScreen> {
     super.initState();
     _userController = UserController();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextField(
-              controller: _usernameController,
-              decoration: InputDecoration(
-                labelText: "User Name",
-                border: OutlineInputBorder(),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextField(
+                controller: _usernameController,
+                decoration: InputDecoration(
+                  labelText: "User Name",
+                  border: OutlineInputBorder(),
+                ),
               ),
-            ),
-            ElevatedButton(onPressed: ()async{        
-            },
-             child: Text("inserted")),
-           
-            Expanded(
-              child: ListView.separated(
-                itemBuilder: (context, index)=> Row(
-                children: [
-                
-                  Text(_userController.dataUser[index].toString()),
-                ],
-              ), separatorBuilder: (context, index)=> SizedBox(height: 10,), itemCount:_userController.dataUser.length),
-            ),],
+              ElevatedButton(
+                  onPressed: () async {
+                    _userController.insertUser(
+                        userName: _usernameController.text);
+                    setState(() {});
+                  },
+                  child: Text("inserted")),
+              Expanded(
+                child: ListView.separated(
+                    itemBuilder: (context, index) => Row(
+                          children: [
+                            Text(
+                                "id : ${_userController.dataUser[index]["user_id"]}     "),
+                            Text(
+                                "name : ${_userController.dataUser[index]["username"]}"),
+                          ],
+                        ),
+                    separatorBuilder: (context, index) => SizedBox(
+                          height: 10,
+                        ),
+                    itemCount: _userController.dataUser.length),
+              ),
+            ],
+          ),
         ),
       ),
     );
