@@ -22,4 +22,8 @@ class UserController {
     MySqlFliteDatabase db = MySqlFliteDatabase();
     await db.updateUserTable(userName: userName, id: id);
   }
+  void deleteUser({ required int id}) async {
+    MySqlFliteDatabase db = MySqlFliteDatabase();
+    await db.deleteUserTable( id: id);
+  }
 }

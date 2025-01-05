@@ -37,11 +37,18 @@ class MySqlFliteDatabase extends Crud {
   }
 
   @override
-  Future<bool> delete() async {
+  Future<bool> delete({required String tableName,required String where}) async {
     await _initDatabase();
-    int deleted = await _db!.delete(_userTable, where: '$_userColumnID == 2');
+    int deleted = await _db!.delete(tableName, where: where);
     await _db!.close();
     return deleted > 0 ? true : false;
+  }
+
+  Future<bool> deleteUserTable({required int id}) async {
+    return delete(tableName: _userTable, where: '$_userColumnID == $id');
+  }
+  Future<bool> deleteProductTable({required int id}) async {
+    return delete(tableName: _productTable, where: '$_productColumnID == $id');
   }
 
   Future<bool> insertToUserTable({required String userName}) async {

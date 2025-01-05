@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart' as sqfliteDataBase;
 import 'package:path/path.dart';
 import 'package:sqflite_department/core/database/sqlflite/my_sqlflite_database.dart';
+import 'package:sqflite_department/view/main_screen.dart';
 import 'package:sqflite_department/view/user_screen.dart';
 
 void main() async {
@@ -83,7 +84,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-            home: UserScreen(),
+            home: MainScreen(),
     );
   }
 }

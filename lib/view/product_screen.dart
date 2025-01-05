@@ -3,14 +3,14 @@ import 'package:sqflite_department/controlller/user_controller.dart';
 
 import '../core/database/sqlflite/my_sqlflite_database.dart';
 
-class UserScreen extends StatefulWidget {
-  const UserScreen({super.key});
+class ProductScreen extends StatefulWidget {
+  const ProductScreen({super.key});
 
   @override
-  State<UserScreen> createState() => _UserScreenState();
+  State<ProductScreen> createState() => _UserScreenState();
 }
 
-class _UserScreenState extends State<UserScreen> {
+class _UserScreenState extends State<ProductScreen> {
   TextEditingController _usernameController = TextEditingController();
   TextEditingController _usernameEditController = TextEditingController();
   late UserController _userController;
@@ -25,7 +25,7 @@ class _UserScreenState extends State<UserScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("User Screen"),
+        title: Text("Product Screen"),
       ),
       body: SafeArea(
         child: Padding(
