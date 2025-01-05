@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:sqflite_department/controlller/product_controller.dart';
 import 'package:sqflite_department/controlller/user_controller.dart';
 
-import '../core/database/sqlflite/my_sqlflite_database.dart';
 
 class ProductScreen extends StatefulWidget {
   const ProductScreen({super.key});
@@ -11,14 +11,16 @@ class ProductScreen extends StatefulWidget {
 }
 
 class _UserScreenState extends State<ProductScreen> {
-  TextEditingController _usernameController = TextEditingController();
-  TextEditingController _usernameEditController = TextEditingController();
-  late UserController _userController;
+  final TextEditingController _productNameController = TextEditingController();
+  final TextEditingController _productdEditController = TextEditingController();
+  final TextEditingController _productPriceController = TextEditingController();
+  final TextEditingController _productCountController = TextEditingController();
+  late ProductController _productController;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _userController = UserController();
+    _productController = ProductController();
   }
 
   @override
@@ -34,16 +36,40 @@ class _UserScreenState extends State<ProductScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               TextField(
-                controller: _usernameController,
+                controller: _productNameController,
                 decoration: InputDecoration(
-                  labelText: "User Name",
+                  labelText: "Product Name",
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              TextField(
+                keyboardType: TextInputType.number,
+                controller: _productPriceController,
+                decoration: InputDecoration(
+                  labelText: "Price",
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              TextField(
+                keyboardType: TextInputType.number,
+                controller: _productCountController,
+                decoration: InputDecoration(
+                  labelText: "Count",
                   border: OutlineInputBorder(),
                 ),
               ),
               ElevatedButton(
                   onPressed: () async {
-                    _userController.insertUser(
-                        userName: _usernameController.text);
+                    _productController.insertProduct(
+                        name: _productNameController.text,
+                        price: double.parse(_productPriceController.text),
+                        count: int.parse(_productCountController.text));
                     setState(() {});
                   },
                   child: Text("inserted")),
@@ -52,67 +78,67 @@ class _UserScreenState extends State<ProductScreen> {
                     setState(() {});
                   },
                   child: Text("refresh")),
-              Expanded(
-                child: ListView.separated(
-                    itemBuilder: (context, index) => InkWell(
-                          onTap: () {
-                            int id = _userController.dataUser[index]["user_id"];
-                            _usernameEditController.text =
-                                _userController.dataUser[index]["username"];
-                            showModalBottomSheet(
-                                context: context,
-                                builder: (context) => Container(
-                                      padding: EdgeInsets.all(20),
-                                      child: Column(
-                                        children: [
-                                          TextField(
-                                            controller: _usernameEditController,
-                                            decoration: InputDecoration(
-                                              labelText: "User Name",
-                                              border: OutlineInputBorder(),
-                                            ),
-                                          ),
-                                          Row(
-                                            children: [
-                                              ElevatedButton(
-                                                  onPressed: () async {
-                                                    _userController.updateUser(
-                                                        userName:
-                                                            _usernameEditController
-                                                                .text,
-                                                        id: id);
-                                                    Navigator.of(context).pop;
-                                                    setState(() {});
-                                                  },
-                                                  child: Text("update")),
-                                              ElevatedButton(
-                                                  onPressed: () async {
-                                                    _userController.deleteUser(
-                                                        id: id);
-                                                    Navigator.of(context).pop;
-                                                    setState(() {});
-                                                  },
-                                                  child: Text("delete")),
-                                            ],
-                                          )
-                                        ],
-                                      ),
-                                    ));
-                          },
-                          child: Row(
-                            children: [
-                              Text(
-                                  "id : ${_userController.dataUser[index]["user_id"]}     "),
-                              Text(
-                                  "name : ${_userController.dataUser[index]["username"]}"),
-                            ],
-                          ),
-                        ),
-                    separatorBuilder: (context, index) => SizedBox(
-                          height: 10,
-                        ),
-                    itemCount: _userController.dataUser.length),
-              ),
+              // Expanded(
+              //   child: ListView.separated(
+              //       itemBuilder: (context, index) => InkWell(
+              //             onTap: () {
+              //               int id = _productController.dataUser[index]["user_id"];
+              //               _productdEditController.text =
+              //                   _productController.dataUser[index]["username"];
+              //               showModalBottomSheet(
+              //                   context: context,
+              //                   builder: (context) => Container(
+              //                         padding: EdgeInsets.all(20),
+              //                         child: Column(
+              //                           children: [
+              //                             TextField(
+              //                               controller: _productdEditController,
+              //                               decoration: InputDecoration(
+              //                                 labelText: "User Name",
+              //                                 border: OutlineInputBorder(),
+              //                               ),
+              //                             ),
+              //                             Row(
+              //                               children: [
+              //                                 ElevatedButton(
+              //                                     onPressed: () async {
+              //                                       _productController.updateUser(
+              //                                           userName:
+              //                                               _productdEditController
+              //                                                   .text,
+              //                                           id: id);
+              //                                       Navigator.of(context).pop;
+              //                                       setState(() {});
+              //                                     },
+              //                                     child: Text("update")),
+              //                                 ElevatedButton(
+              //                                     onPressed: () async {
+              //                                       _productController.deleteUser(
+              //                                           id: id);
+              //                                       Navigator.of(context).pop;
+              //                                       setState(() {});
+              //                                     },
+              //                                     child: Text("delete")),
+              //                               ],
+              //                             )
+              //                           ],
+              //                         ),
+              //                       ));
+              //             },
+              //             child: Row(
+              //               children: [
+              //                 Text(
+              //                     "id : ${_productController.dataUser[index]["user_id"]}     "),
+              //                 Text(
+              //                     "name : ${_productController.dataUser[index]["username"]}"),
+              //               ],
+              //             ),
+              //           ),
+              //       separatorBuilder: (context, index) => SizedBox(
+              //             height: 10,
+              //           ),
+              //       itemCount: _productController.dataUser.length),
+              // ),
             ],
           ),
         ),
