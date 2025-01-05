@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sqflite_department/view/product_screen.dart';
+import 'package:sqflite_department/view/sales_screen.dart';
 import 'package:sqflite_department/view/user_screen.dart';
 
 class MainScreen extends StatelessWidget {
@@ -24,7 +25,10 @@ class MainScreen extends StatelessWidget {
                   Navigator.of(context).push(
                         MaterialPageRoute(builder: (context) => ProductScreen()));
               }, child: Text("Product Screen")),
-              ElevatedButton(onPressed: () {}, child: Text("Sales Screen")),
+              ElevatedButton(onPressed: () {
+                  Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => SalesScreen()));
+              }, child: Text("Sales Screen")),
             ],
           ),
         ),
