@@ -171,8 +171,8 @@ class _UserScreenState extends State<ProductScreen> {
                                                   child: Text("update")),
                                               ElevatedButton(
                                                   onPressed: () async {
-                                                    // _productController.deleteUser(
-                                                    //     id: id);
+                                                    _productController.deleteProduct(
+                                                        id: id);
                                                     Navigator.of(context).pop;
                                                     setState(() {});
                                                   },

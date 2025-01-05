@@ -26,8 +26,8 @@ class ProductController {
     await db.updateProductTable(productName: productName,productPrice: productPrice, productCount: productCount, id: id);
   }
 
-  void deleteUser({required int id}) async {
+  void deleteProduct({required int id}) async {
     MySqlFliteDatabase db = MySqlFliteDatabase();
-    await db.deleteUserTable(id: id);
+    await db.deleteProductTable(id: id);
   }
 }
