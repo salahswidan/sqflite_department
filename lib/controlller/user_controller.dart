@@ -20,6 +20,6 @@ class UserController {
 
   void updateUser({required String userName, required int id}) async {
     MySqlFliteDatabase db = MySqlFliteDatabase();
-    await db.update(userName: userName, id: id);
+    await db.updateUserTable(userName: userName, id: id);
   }
 }

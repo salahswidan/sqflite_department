@@ -69,10 +69,10 @@ class MySqlFliteDatabase extends Crud {
     return inserted > 0 ? true : false;
   }
 
-  @override
   Future<List<Map<String, Object?>>> selectUserTableData() async {
     return select(tableName: _userTable);
   }
+
   Future<List<Map<String, Object?>>> selectProductTableData() async {
     return select(tableName: _productTable);
   }
@@ -85,18 +85,21 @@ class MySqlFliteDatabase extends Crud {
   }
 
   @override
-  Future<bool> update({required String userName,required int id}) async {
+  Future<bool> update(
+      {required String tableName,
+      required Map<String, Object?> values,
+      required String where}) async {
     await _initDatabase();
-    int updated = await _db!.update(
-      _userTable,
-      {
-        _userColumnUserName: userName,
-        
-      
-      },
-      where: "$_userColumnID == $id"
-    );
+    int updated = await _db!.update(tableName, values, where: where);
     await _db!.close();
     return updated > 0 ? true : false;
+  }
+
+  Future<bool> updateUserTable(
+      {required String userName, required int id}) async {
+    return update(
+        tableName: _userTable,
+        values: {_userColumnUserName: userName},
+        where: "$_userColumnID == $id");
   }
 }
