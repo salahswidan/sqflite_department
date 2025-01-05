@@ -11,7 +11,12 @@ class ProductScreen extends StatefulWidget {
 
 class _UserScreenState extends State<ProductScreen> {
   final TextEditingController _productNameController = TextEditingController();
-  final TextEditingController _productdEditController = TextEditingController();
+  final TextEditingController _productdEditNameController =
+      TextEditingController();
+  final TextEditingController _productdEditPriceController =
+      TextEditingController();
+  final TextEditingController _productdEditCountController =
+      TextEditingController();
   final TextEditingController _productPriceController = TextEditingController();
   final TextEditingController _productCountController = TextEditingController();
   late ProductController _productController;
@@ -20,6 +25,19 @@ class _UserScreenState extends State<ProductScreen> {
     // TODO: implement initState
     super.initState();
     _productController = ProductController();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _productNameController.dispose();
+    _productPriceController.dispose();
+    _productCountController.dispose();
+    _productdEditNameController.dispose();
+    _productdEditPriceController.dispose();
+    _productdEditCountController.dispose();
+
+    super.dispose();
   }
 
   @override
@@ -81,49 +99,83 @@ class _UserScreenState extends State<ProductScreen> {
                 child: ListView.separated(
                     itemBuilder: (context, index) => InkWell(
                           onTap: () {
-                            //  int id
-                            // = _productController.dataUser[index]["user_id"];
-                            // _productdEditController.text =
-                            //     _productController.dataUser[index]["username"];
-                            //   showModalBottomSheet(
-                            //       context: context,
-                            //       builder: (context) => Container(
-                            //             padding: EdgeInsets.all(20),
-                            //             child: Column(
-                            //               children: [
-                            //                 TextField(
-                            //                   controller: _productdEditController,
-                            //                   decoration: InputDecoration(
-                            //                     labelText: "User Name",
-                            //                     border: OutlineInputBorder(),
-                            //                   ),
-                            //                 ),
-                            //                 Row(
-                            //                   children: [
-                            //                     ElevatedButton(
-                            //                         onPressed: () async {
-                            //                           _productController.updateUser(
-                            //                               userName:
-                            //                                   _productdEditController
-                            //                                       .text,
-                            //                               id: id);
-                            //                           Navigator.of(context).pop;
-                            //                           setState(() {});
-                            //                         },
-                            //                         child: Text("update")),
-                            //                     ElevatedButton(
-                            //                         onPressed: () async {
-                            //                           _productController.deleteUser(
-                            //                               id: id);
-                            //                           Navigator.of(context).pop;
-                            //                           setState(() {});
-                            //                         },
-                            //                         child: Text("delete")),
-                            //                   ],
-                            //                 )
-                            //               ],
-                            //             ),
-                            //           ));
+                            int id = _productController.dataProduct[index]
+                                ["product_id"];
+                            _productdEditNameController.text =
+                                _productController.dataProduct[index]
+                                    ["product_name"];
+                            _productdEditPriceController.text =
+                                _productController.dataProduct[index]
+                                        ["product_price"]
+                                    .toString();
+                            _productdEditCountController.text =
+                                _productController.dataProduct[index]
+                                        ["product_count"]
+                                    .toString();
+                            showModalBottomSheet(
+                                context: context,
+                                builder: (context) => Container(
+                                      padding: EdgeInsets.all(20),
+                                      child: Column(
+                                        children: [
+                                          TextField(
+                                            controller:
+                                                _productdEditNameController,
+                                            decoration: InputDecoration(
+                                              labelText: "Product Name",
+                                              border: OutlineInputBorder(),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 20,
+                                          ),
+                                          TextField(
+                                            keyboardType: TextInputType.number,
+                                            controller:
+                                                _productdEditPriceController,
+                                            decoration: InputDecoration(
+                                              labelText: "Price",
+                                              border: OutlineInputBorder(),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 20,
+                                          ),
+                                          TextField(
+                                            keyboardType: TextInputType.number,
+                                            controller:
+                                                _productdEditCountController,
+                                            decoration: InputDecoration(
+                                              labelText: "Count",
+                                              border: OutlineInputBorder(),
+                                            ),
+                                          ),
+                                          Row(
+                                            children: [
+                                              ElevatedButton(
+                                                  onPressed: () async {
+                                                    // _productController.updateUser(
+                                                    //     userName:
+                                                    //         _productdEditController
+                                                    //             .text,
+                                                    //     id: id);
+                                                    Navigator.of(context).pop;
+                                                    setState(() {});
+                                                  },
+                                                  child: Text("update")),
+                                              ElevatedButton(
+                                                  onPressed: () async {
+                                                    // _productController.deleteUser(
+                                                    //     id: id);
+                                                    Navigator.of(context).pop;
+                                                    setState(() {});
+                                                  },
+                                                  child: Text("delete")),
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                    ));
                           },
                           child: Row(
                             children: [
