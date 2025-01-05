@@ -112,4 +112,15 @@ class MySqlFliteDatabase extends Crud {
         values: {_userColumnUserName: userName},
         where: "$_userColumnID == $id");
   }
+  Future<bool> updateProductTable(
+      {required String productName, required int id ,required double productPrice, required int productCount}) async {
+    return update(
+        tableName: _productTable,
+        values: {
+          _productColumnName: productName,
+          _productColumnPrice: productPrice,
+          _productColumnCount: productCount
+          },
+        where: "$_productColumnID == $id");
+  }
 }

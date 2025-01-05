@@ -154,11 +154,17 @@ class _UserScreenState extends State<ProductScreen> {
                                             children: [
                                               ElevatedButton(
                                                   onPressed: () async {
-                                                    // _productController.updateUser(
-                                                    //     userName:
-                                                    //         _productdEditController
-                                                    //             .text,
-                                                    //     id: id);
+                                                    _productController.updateProduct(
+                                                        productCount: int.parse(
+                                                            _productdEditCountController
+                                                                .text),
+                                                        productName:
+                                                            _productdEditNameController
+                                                                .text,
+                                                        productPrice: double.parse(
+                                                            _productdEditPriceController
+                                                                .text),
+                                                        id: id);
                                                     Navigator.of(context).pop;
                                                     setState(() {});
                                                   },

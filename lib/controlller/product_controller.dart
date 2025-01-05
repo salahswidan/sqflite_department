@@ -21,9 +21,9 @@ class ProductController {
     // print(dataUser);
   }
 
-  void updateUser({required String userName, required int id}) async {
+  void updateProduct({required String productName, required int id ,required double productPrice, required int productCount}) async {
     MySqlFliteDatabase db = MySqlFliteDatabase();
-    await db.updateUserTable(userName: userName, id: id);
+    await db.updateProductTable(productName: productName,productPrice: productPrice, productCount: productCount, id: id);
   }
 
   void deleteUser({required int id}) async {
