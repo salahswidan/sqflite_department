@@ -85,11 +85,16 @@ class MySqlFliteDatabase extends Crud {
   }
 
   @override
-  Future<bool> update() async {
+  Future<bool> update({required String userName,required int id}) async {
     await _initDatabase();
     int updated = await _db!.update(
       _userTable,
-      {},
+      {
+        _userColumnUserName: userName,
+        
+      
+      },
+      where: "$_userColumnID == $id"
     );
     await _db!.close();
     return updated > 0 ? true : false;

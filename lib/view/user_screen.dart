@@ -12,6 +12,7 @@ class UserScreen extends StatefulWidget {
 
 class _UserScreenState extends State<UserScreen> {
   TextEditingController _usernameController = TextEditingController();
+  TextEditingController _usernameEditController = TextEditingController();
   late UserController _userController;
   @override
   void initState() {
@@ -45,13 +46,60 @@ class _UserScreenState extends State<UserScreen> {
                   child: Text("inserted")),
               Expanded(
                 child: ListView.separated(
-                    itemBuilder: (context, index) => Row(
-                          children: [
-                            Text(
-                                "id : ${_userController.dataUser[index]["user_id"]}     "),
-                            Text(
-                                "name : ${_userController.dataUser[index]["username"]}"),
-                          ],
+                    itemBuilder: (context, index) => InkWell(
+                          onTap: () {
+                            int id = _userController.dataUser[index]["user_id"];
+                            _usernameEditController.text =
+                                _userController.dataUser[index]["username"];
+                            showModalBottomSheet(
+                                context: context,
+                                builder: (context) => Container(
+                                      padding: EdgeInsets.all(20),
+                                      child: Column(
+                                        children: [
+                                          TextField(
+                                            controller: _usernameEditController,
+                                            decoration: InputDecoration(
+                                              labelText: "User Name",
+                                              border: OutlineInputBorder(),
+                                            ),
+                                          ),
+                                          Row(
+                                            children: [
+                                              ElevatedButton(
+                                                  onPressed: () async {
+                                                    _userController.updateUser(
+                                                        userName:
+                                                            _usernameEditController
+                                                                .text,
+                                                        id: id);
+                                                    Navigator.of(context).pop;
+                                                    setState(() {});
+                                                  },
+                                                  child: Text("update")),
+                                              ElevatedButton(
+                                                  onPressed: () async {
+                                                    _userController.insertUser(
+                                                        userName:
+                                                            _usernameController
+                                                                .text);
+                                                    setState(() {});
+                                                  },
+                                                  child: Text("delete")),
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                    ));
+                          },
+                          child: Row(
+                            children: [
+                              Text(
+                                  "id : ${_userController.dataUser[index]["user_id"]}     "),
+                              Text(
+                                  "name : ${_userController.dataUser[index]["username"]}"),
+                            ],
+                          ),
                         ),
                     separatorBuilder: (context, index) => SizedBox(
                           height: 10,
