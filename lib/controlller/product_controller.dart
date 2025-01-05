@@ -16,7 +16,7 @@ class ProductController {
 
   void select() async {
     MySqlFliteDatabase db = MySqlFliteDatabase();
-    dataProduct = await db.selectUserTableData();
+    dataProduct = await db.selectProductTableData();
 
     // print(dataUser);
   }

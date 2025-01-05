@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:sqflite_department/controlller/product_controller.dart';
 import 'package:sqflite_department/controlller/user_controller.dart';
 
-
 class ProductScreen extends StatefulWidget {
   const ProductScreen({super.key});
 
@@ -78,67 +77,72 @@ class _UserScreenState extends State<ProductScreen> {
                     setState(() {});
                   },
                   child: Text("refresh")),
-              // Expanded(
-              //   child: ListView.separated(
-              //       itemBuilder: (context, index) => InkWell(
-              //             onTap: () {
-              //               int id = _productController.dataUser[index]["user_id"];
-              //               _productdEditController.text =
-              //                   _productController.dataUser[index]["username"];
-              //               showModalBottomSheet(
-              //                   context: context,
-              //                   builder: (context) => Container(
-              //                         padding: EdgeInsets.all(20),
-              //                         child: Column(
-              //                           children: [
-              //                             TextField(
-              //                               controller: _productdEditController,
-              //                               decoration: InputDecoration(
-              //                                 labelText: "User Name",
-              //                                 border: OutlineInputBorder(),
-              //                               ),
-              //                             ),
-              //                             Row(
-              //                               children: [
-              //                                 ElevatedButton(
-              //                                     onPressed: () async {
-              //                                       _productController.updateUser(
-              //                                           userName:
-              //                                               _productdEditController
-              //                                                   .text,
-              //                                           id: id);
-              //                                       Navigator.of(context).pop;
-              //                                       setState(() {});
-              //                                     },
-              //                                     child: Text("update")),
-              //                                 ElevatedButton(
-              //                                     onPressed: () async {
-              //                                       _productController.deleteUser(
-              //                                           id: id);
-              //                                       Navigator.of(context).pop;
-              //                                       setState(() {});
-              //                                     },
-              //                                     child: Text("delete")),
-              //                               ],
-              //                             )
-              //                           ],
-              //                         ),
-              //                       ));
-              //             },
-              //             child: Row(
-              //               children: [
-              //                 Text(
-              //                     "id : ${_productController.dataUser[index]["user_id"]}     "),
-              //                 Text(
-              //                     "name : ${_productController.dataUser[index]["username"]}"),
-              //               ],
-              //             ),
-              //           ),
-              //       separatorBuilder: (context, index) => SizedBox(
-              //             height: 10,
-              //           ),
-              //       itemCount: _productController.dataUser.length),
-              // ),
+              Expanded(
+                child: ListView.separated(
+                    itemBuilder: (context, index) => InkWell(
+                          onTap: () {
+                            //  int id
+                            // = _productController.dataUser[index]["user_id"];
+                            // _productdEditController.text =
+                            //     _productController.dataUser[index]["username"];
+                            //   showModalBottomSheet(
+                            //       context: context,
+                            //       builder: (context) => Container(
+                            //             padding: EdgeInsets.all(20),
+                            //             child: Column(
+                            //               children: [
+                            //                 TextField(
+                            //                   controller: _productdEditController,
+                            //                   decoration: InputDecoration(
+                            //                     labelText: "User Name",
+                            //                     border: OutlineInputBorder(),
+                            //                   ),
+                            //                 ),
+                            //                 Row(
+                            //                   children: [
+                            //                     ElevatedButton(
+                            //                         onPressed: () async {
+                            //                           _productController.updateUser(
+                            //                               userName:
+                            //                                   _productdEditController
+                            //                                       .text,
+                            //                               id: id);
+                            //                           Navigator.of(context).pop;
+                            //                           setState(() {});
+                            //                         },
+                            //                         child: Text("update")),
+                            //                     ElevatedButton(
+                            //                         onPressed: () async {
+                            //                           _productController.deleteUser(
+                            //                               id: id);
+                            //                           Navigator.of(context).pop;
+                            //                           setState(() {});
+                            //                         },
+                            //                         child: Text("delete")),
+                            //                   ],
+                            //                 )
+                            //               ],
+                            //             ),
+                            //           ));
+                          },
+                          child: Row(
+                            children: [
+                              Text(
+                                  " id : ${_productController.dataProduct[index]['product_id']}"),
+                              Text(
+                                  " name : ${_productController.dataProduct[index]['product_name']}"),
+                              Text(
+                                  " price : ${_productController.dataProduct[index]['product_price']}"),
+                              Text(
+                                  " count : ${_productController.dataProduct[index]['product_count']}"),
+                            ],
+                          ),
+                        ),
+                    separatorBuilder: (context, index) => SizedBox(
+                          height: 10,
+                        ),
+                    itemCount: _productController.dataProduct.length),
+              ),
             ],
           ),
         ),

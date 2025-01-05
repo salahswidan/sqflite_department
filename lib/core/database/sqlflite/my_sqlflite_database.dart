@@ -1,3 +1,4 @@
+
 import 'package:sqflite_department/core/database/sqlflite/crud.dart';
 import 'package:sqflite/sqflite.dart' as sqfliteDataBase;
 import 'package:path/path.dart';
@@ -37,7 +38,8 @@ class MySqlFliteDatabase extends Crud {
   }
 
   @override
-  Future<bool> delete({required String tableName,required String where}) async {
+  Future<bool> delete(
+      {required String tableName, required String where}) async {
     await _initDatabase();
     int deleted = await _db!.delete(tableName, where: where);
     await _db!.close();
@@ -47,6 +49,7 @@ class MySqlFliteDatabase extends Crud {
   Future<bool> deleteUserTable({required int id}) async {
     return delete(tableName: _userTable, where: '$_userColumnID == $id');
   }
+
   Future<bool> deleteProductTable({required int id}) async {
     return delete(tableName: _productTable, where: '$_productColumnID == $id');
   }
@@ -69,7 +72,6 @@ class MySqlFliteDatabase extends Crud {
   @override
   Future<bool> insert(
       {required String tableName, required Map<String, Object?> values}) async {
-    // TODO: implement insert
     await _initDatabase();
     int inserted = await _db!.insert(tableName, values);
     await _db!.close();
@@ -84,9 +86,10 @@ class MySqlFliteDatabase extends Crud {
     return select(tableName: _productTable);
   }
 
+  @override
   Future<List<Map<String, Object?>>> select({required String tableName}) async {
     await _initDatabase();
-    List<Map<String, Object?>> data = await _db!.query(_userTable);
+    List<Map<String, Object?>> data = await _db!.query(tableName);
     await _db!.close();
     return data;
   }
