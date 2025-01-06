@@ -3,6 +3,7 @@ import '../core/database/sqlflite/my_sqlflite_database.dart';
 class SalesController {
   List dataUser = [];
   List dataProducts = [];
+  List dataSales = [];
   int? valueButtonUsers;
   int valueButtonProducts = 0;
 
@@ -38,7 +39,6 @@ class SalesController {
       MySqlFliteDatabase db = MySqlFliteDatabase();
       bool inserted = await db.insertToSalesTable(
           productName: productName, userName: userName);
-      print(inserted);
     }
   }
 
@@ -46,5 +46,11 @@ class SalesController {
     MySqlFliteDatabase db = MySqlFliteDatabase();
     dataProducts = await db.selectProductTableData();
     valueButtonProducts = dataProducts[0]["product_id"];
+  }
+
+  Future<void> selectSales() async {
+    MySqlFliteDatabase db = MySqlFliteDatabase();
+    dataSales = await db.selectSalesTableData();
+    print(dataSales);
   }
 }

@@ -87,6 +87,9 @@ class MySqlFliteDatabase extends Crud {
   Future<List<Map<String, Object?>>> selectUserTableData() async {
     return select(tableName: _userTable);
   }
+  Future<List<Map<String, Object?>>> selectSalesTableData() async {
+    return select(tableName: _salesTable);
+  }
 
   Future<List<Map<String, Object?>>> selectProductTableData() async {
     return select(tableName: _productTable);

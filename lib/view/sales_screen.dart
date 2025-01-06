@@ -91,9 +91,77 @@ class _SalesScreenState extends State<SalesScreen> {
                     ElevatedButton(
                         onPressed: () {
                           _salesController.insertToSales();
+                          _salesController.selectSales();
+                          setState(() {});
                         },
                         child: Text("Add")),
+                    ElevatedButton(
+                        onPressed: () {
+                          _salesController.selectSales();
+                        },
+                        child: Text("det data")),
                   ],
+                ),
+                Expanded(
+                  child: ListView.separated(
+                      itemBuilder: (context, index) => InkWell(
+                            // onTap: () {
+                            //   int id = _userController.dataUser[index]["user_id"];
+                            //   _usernameEditController.text =
+                            //       _userController.dataUser[index]["username"];
+                            //   showModalBottomSheet(
+                            //       context: context,
+                            //       builder: (context) => Container(
+                            //             padding: EdgeInsets.all(20),
+                            //             child: Column(
+                            //               children: [
+                            //                 TextField(
+                            //                   controller: _usernameEditController,
+                            //                   decoration: InputDecoration(
+                            //                     labelText: "User Name",
+                            //                     border: OutlineInputBorder(),
+                            //                   ),
+                            //                 ),
+                            //                 Row(
+                            //                   children: [
+                            //                     ElevatedButton(
+                            //                         onPressed: () async {
+                            //                           _userController.updateUser(
+                            //                               userName:
+                            //                                   _usernameEditController
+                            //                                       .text,
+                            //                               id: id);
+                            //                           Navigator.of(context).pop;
+                            //                           setState(() {});
+                            //                         },
+                            //                         child: Text("update")),
+                            //                     ElevatedButton(
+                            //                         onPressed: () async {
+                            //                           _userController.deleteUser(
+                            //                               id: id);
+                            //                           Navigator.of(context).pop;
+                            //                           setState(() {});
+                            //                         },
+                            //                         child: Text("delete")),
+                            //                   ],
+                            //                 )
+                            //               ],
+                            //             ),
+                            //           ));
+                            // },
+                            child: Row(
+                              children: [
+                                Text(
+                                    "id : ${_salesController.dataSales[index]["sales_user_name"]}"),
+                                Text(
+                                    "name : ${_salesController.dataSales[index]["sales_product_name"]}"),
+                              ],
+                            ),
+                          ),
+                      separatorBuilder: (context, index) => SizedBox(
+                            height: 10,
+                          ),
+                      itemCount: _salesController.dataSales.length),
                 ),
               ],
             ),
