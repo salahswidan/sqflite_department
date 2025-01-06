@@ -93,9 +93,9 @@ class MySqlFliteDatabase extends Crud {
     return select(tableName: _userTable);
   }
 
-  Future<List<Map<String, Object?>>> selectSalesTableData() async {
-    return select(tableName: _salesTable);
-  }
+  // Future<List<Map<String, Object?>>> selectSalesTableData() async {
+  //   return select(tableName: _salesTable);
+  // }
 
   Future<List<Map<String, Object?>>> selectProductTableData() async {
     return select(tableName: _productTable);
@@ -105,6 +105,14 @@ class MySqlFliteDatabase extends Crud {
   Future<List<Map<String, Object?>>> select({required String tableName}) async {
     await _initDatabase();
     List<Map<String, Object?>> data = await _db!.query(tableName);
+    await _db!.close();
+    return data;
+  }
+
+  Future<List<Map<String, Object?>>> selectSalesTableData() async {
+    await _initDatabase();
+    List<Map<String, Object?>> data = await _db!.rawQuery(
+        "SELECT $_salesTable.$_salesColumnID,$_productTable.$_productColumnName,$_userTable.$_userColumnUserName FROM $_salesTable,$_userTable,$_productTable WHERE $_salesTable.$_salesColumnUserID = $_userTable.$_userColumnID AND $_salesTable.$_salesColumnProductID = $_productTable.$_productColumnID");
     await _db!.close();
     return data;
   }

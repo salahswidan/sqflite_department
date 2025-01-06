@@ -40,6 +40,7 @@ class SalesController {
   Future<void> selectSales() async {
     MySqlFliteDatabase db = MySqlFliteDatabase();
     dataSales = await db.selectSalesTableData();
+    // dataSales = await db.selectSales();
     print(dataSales);
   }
 }
