@@ -48,7 +48,11 @@ class _SalesScreenState extends State<SalesScreen> {
                                   _salesController.dataUser[i]["username"]),
                             )
                         ],
-                        onChanged: (value) {})
+                        onChanged: (value) {
+                            _salesController.valueButtonUsers =
+                              int.parse(value.toString());
+                          setState(() {});
+                        })
                   ],
                 ),
                 Row(
@@ -64,14 +68,17 @@ class _SalesScreenState extends State<SalesScreen> {
                               i < _salesController.dataProducts.length;
                               i++)
                             DropdownMenuItem(
-                              value: _salesController.dataProducts[i]["product_id"],
+                              value: _salesController.dataProducts[i]
+                                  ["product_id"],
                               child: Text(
-                                  "${
-                                  _salesController.dataProducts[i]["product_name"]} / ${_salesController.dataProducts[i]["product_price"].toString()}"),
-                                  ),
-                   
+                                  "${_salesController.dataProducts[i]["product_name"]} / ${_salesController.dataProducts[i]["product_price"].toString()}"),
+                            ),
                         ],
-                        onChanged: (value) {})
+                        onChanged: (value) {
+                          _salesController.valueButtonProducts =
+                              int.parse(value.toString());
+                          setState(() {});
+                        })
                   ],
                 ),
               ],
