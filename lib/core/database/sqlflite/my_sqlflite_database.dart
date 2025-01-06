@@ -59,6 +59,12 @@ class MySqlFliteDatabase extends Crud {
       _userColumnUserName: userName,
     });
   }
+  Future<bool> insertToSalesTable({required String userName,required String productName }) async {
+    return insert(tableName: _salesTable, values: {
+      _salesColumnUserName: userName,
+      _salesColumnProductName: productName,
+    });
+  }
 
   Future<bool> insertToProductTable(
       {required String name, required double price, required int count}) async {

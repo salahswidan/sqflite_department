@@ -49,7 +49,7 @@ class _SalesScreenState extends State<SalesScreen> {
                             )
                         ],
                         onChanged: (value) {
-                            _salesController.valueButtonUsers =
+                          _salesController.valueButtonUsers =
                               int.parse(value.toString());
                           setState(() {});
                         })
@@ -79,6 +79,20 @@ class _SalesScreenState extends State<SalesScreen> {
                               int.parse(value.toString());
                           setState(() {});
                         })
+                  ],
+                ),
+                Row(
+                  children: [
+                    ElevatedButton(
+                        onPressed: () {
+                          setState(() {});
+                        },
+                        child: Text("refrash")),
+                    ElevatedButton(
+                        onPressed: () {
+                          _salesController.insertToSales();
+                        },
+                        child: Text("Add")),
                   ],
                 ),
               ],
