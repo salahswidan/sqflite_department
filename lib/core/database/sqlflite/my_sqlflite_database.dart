@@ -1,4 +1,3 @@
-
 import 'package:sqflite_department/core/database/sqlflite/crud.dart';
 import 'package:sqflite/sqflite.dart' as sqfliteDataBase;
 import 'package:path/path.dart';
@@ -14,17 +13,21 @@ class MySqlFliteDatabase extends Crud {
   final String _productTable = 'product';
   final String _salesTable = 'sales';
   final String _salesColumnID = 'sales_id';
-  final String _salesColumnProductName = 'sales_product_name';
-  final String _salesColumnUserName = 'sales_user_name';
+  final String _salesColumnProductID = 'sales_product_ID';
+  final String _salesColumnUserID = 'sales_user_ID';
   sqfliteDataBase.Database? _db;
 
   Future<sqfliteDataBase.Database> _initDatabase() async {
     String databasePath = await sqfliteDataBase.getDatabasesPath();
     String managamentDataBaseName = 'managament.db';
     String realDatabasePath = join(databasePath, managamentDataBaseName);
-    int versionDataBase = 1;
+    int versionDataBase = 2;
     _db ??= await sqfliteDataBase.openDatabase(realDatabasePath,
-        onCreate: _onCreate, version: versionDataBase);
+        onCreate: _onCreate, onUpgrade: (db, int oldVersion, int newVersion) {
+      // print(db);
+      // print(oldVersion);
+      // print(newVersion);
+    }, version: versionDataBase);
     return _db!;
   }
 
@@ -34,7 +37,7 @@ class MySqlFliteDatabase extends Crud {
     await db.execute(
         'CREATE TABLE IF NOT EXISTS $_productTable ($_productColumnID INTEGER PRIMARY KEY AUTOINCREMENT, $_productColumnName TEXT ,$_productColumnPrice REAL, $_productColumnCount INTEGER);');
     await db.execute(
-        'CREATE TABLE  IF NOT EXISTS $_salesTable ($_salesColumnID INTEGER PRIMARY KEY AUTOINCREMENT, $_salesColumnProductName TEXT ,$_salesColumnUserName TEXT);');
+        'CREATE TABLE  IF NOT EXISTS $_salesTable ($_salesColumnID INTEGER PRIMARY KEY AUTOINCREMENT, $_salesColumnProductID INTEGER ,$_salesColumnUserID INTEGER);');
   }
 
   @override
@@ -59,10 +62,12 @@ class MySqlFliteDatabase extends Crud {
       _userColumnUserName: userName,
     });
   }
-  Future<bool> insertToSalesTable({required String userName,required String productName }) async {
+
+  Future<bool> insertToSalesTable(
+      {required int userID, required int productID}) async {
     return insert(tableName: _salesTable, values: {
-      _salesColumnUserName: userName,
-      _salesColumnProductName: productName,
+      _salesColumnUserID: userID,
+      _salesColumnProductID: productID,
     });
   }
 
@@ -87,6 +92,7 @@ class MySqlFliteDatabase extends Crud {
   Future<List<Map<String, Object?>>> selectUserTableData() async {
     return select(tableName: _userTable);
   }
+
   Future<List<Map<String, Object?>>> selectSalesTableData() async {
     return select(tableName: _salesTable);
   }
@@ -121,15 +127,19 @@ class MySqlFliteDatabase extends Crud {
         values: {_userColumnUserName: userName},
         where: "$_userColumnID == $id");
   }
+
   Future<bool> updateProductTable(
-      {required String productName, required int id ,required double productPrice, required int productCount}) async {
+      {required String productName,
+      required int id,
+      required double productPrice,
+      required int productCount}) async {
     return update(
         tableName: _productTable,
         values: {
           _productColumnName: productName,
           _productColumnPrice: productPrice,
           _productColumnCount: productCount
-          },
+        },
         where: "$_productColumnID == $id");
   }
 }

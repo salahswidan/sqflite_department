@@ -24,9 +24,7 @@ class _UserScreenState extends State<UserScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("User Screen"),
-      ),
+      appBar: AppBar(title: Text("user screen"),),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(8.0),

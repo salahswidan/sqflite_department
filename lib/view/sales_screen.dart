@@ -99,7 +99,7 @@ class _SalesScreenState extends State<SalesScreen> {
                         onPressed: () {
                           _salesController.selectSales();
                         },
-                        child: Text("det data")),
+                        child: Text("get data")),
                   ],
                 ),
                 Expanded(
@@ -152,9 +152,9 @@ class _SalesScreenState extends State<SalesScreen> {
                             child: Row(
                               children: [
                                 Text(
-                                    "id : ${_salesController.dataSales[index]["sales_user_name"]}"),
+                                    "user : ${_salesController.dataSales[index]["sales_user_ID"]}  "),
                                 Text(
-                                    "name : ${_salesController.dataSales[index]["sales_product_name"]}"),
+                                    "product : ${_salesController.dataSales[index]["sales_product_ID"]}"),
                               ],
                             ),
                           ),
