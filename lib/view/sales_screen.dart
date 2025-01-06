@@ -37,7 +37,7 @@ class _SalesScreenState extends State<SalesScreen> {
                       width: 100,
                     ),
                     DropdownButton(
-                        value: _salesController.valueButton,
+                        value: _salesController.valueButtonUsers,
                         items: [
                           for (int i = 0;
                               i < _salesController.dataUser.length;
@@ -54,6 +54,24 @@ class _SalesScreenState extends State<SalesScreen> {
                 Row(
                   children: [
                     Text("Product"),
+                    SizedBox(
+                      width: 100,
+                    ),
+                    DropdownButton(
+                        value: _salesController.valueButtonProducts,
+                        items: [
+                          for (int i = 0;
+                              i < _salesController.dataProducts.length;
+                              i++)
+                            DropdownMenuItem(
+                              value: _salesController.dataProducts[i]["product_id"],
+                              child: Text(
+                                  "${
+                                  _salesController.dataProducts[i]["product_name"]} / ${_salesController.dataProducts[i]["product_price"].toString()}"),
+                                  ),
+                   
+                        ],
+                        onChanged: (value) {})
                   ],
                 ),
               ],
