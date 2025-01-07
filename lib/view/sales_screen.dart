@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sqflite_department/controlller/sales_controller.dart';
+import 'package:sqflite_department/core/database/sqlflite/my_sqlflite_database.dart';
 
 class SalesScreen extends StatefulWidget {
   const SalesScreen({super.key});
@@ -96,6 +97,14 @@ class _SalesScreenState extends State<SalesScreen> {
                         },
                         child: Text("Add")),
                     ElevatedButton(
+                        onPressed: () async {
+                          MySqlFliteDatabase db = MySqlFliteDatabase();
+                          var a = await db.sales();
+                          print(a.length);
+                          setState(() {});
+                        },
+                        child: Text("sales")),
+                    ElevatedButton(
                         onPressed: () {
                           _salesController.selectSales();
                         },
@@ -105,50 +114,6 @@ class _SalesScreenState extends State<SalesScreen> {
                 Expanded(
                   child: ListView.separated(
                       itemBuilder: (context, index) => InkWell(
-                            // onTap: () {
-                            //   int id = _userController.dataUser[index]["user_id"];
-                            //   _usernameEditController.text =
-                            //       _userController.dataUser[index]["username"];
-                            //   showModalBottomSheet(
-                            //       context: context,
-                            //       builder: (context) => Container(
-                            //             padding: EdgeInsets.all(20),
-                            //             child: Column(
-                            //               children: [
-                            //                 TextField(
-                            //                   controller: _usernameEditController,
-                            //                   decoration: InputDecoration(
-                            //                     labelText: "User Name",
-                            //                     border: OutlineInputBorder(),
-                            //                   ),
-                            //                 ),
-                            //                 Row(
-                            //                   children: [
-                            //                     ElevatedButton(
-                            //                         onPressed: () async {
-                            //                           _userController.updateUser(
-                            //                               userName:
-                            //                                   _usernameEditController
-                            //                                       .text,
-                            //                               id: id);
-                            //                           Navigator.of(context).pop;
-                            //                           setState(() {});
-                            //                         },
-                            //                         child: Text("update")),
-                            //                     ElevatedButton(
-                            //                         onPressed: () async {
-                            //                           _userController.deleteUser(
-                            //                               id: id);
-                            //                           Navigator.of(context).pop;
-                            //                           setState(() {});
-                            //                         },
-                            //                         child: Text("delete")),
-                            //                   ],
-                            //                 )
-                            //               ],
-                            //             ),
-                            //           ));
-                            // },
                             child: Row(
                               children: [
                                 Text(

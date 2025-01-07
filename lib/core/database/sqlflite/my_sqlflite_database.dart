@@ -23,6 +23,10 @@ class MySqlFliteDatabase extends Crud {
     String realDatabasePath = join(databasePath, managamentDataBaseName);
     int versionDataBase = 2;
     _db ??= await sqfliteDataBase.openDatabase(realDatabasePath,
+    onOpen: (db) async{
+      await db.execute("PRAGMA foreign_keys = ON");
+      
+    },
         onCreate: _onCreate, onUpgrade: (db, int oldVersion, int newVersion) {
       // print(db);
       // print(oldVersion);
@@ -37,7 +41,7 @@ class MySqlFliteDatabase extends Crud {
     await db.execute(
         'CREATE TABLE IF NOT EXISTS $_productTable ($_productColumnID INTEGER PRIMARY KEY AUTOINCREMENT, $_productColumnName TEXT ,$_productColumnPrice REAL, $_productColumnCount INTEGER);');
     await db.execute(
-        'CREATE TABLE  IF NOT EXISTS $_salesTable ($_salesColumnID INTEGER PRIMARY KEY AUTOINCREMENT, $_salesColumnProductID INTEGER ,$_salesColumnUserID INTEGER);');
+        'CREATE TABLE  IF NOT EXISTS $_salesTable ($_salesColumnID INTEGER PRIMARY KEY AUTOINCREMENT, $_salesColumnProductID INTEGER ,$_salesColumnUserID INTEGER    ,"CONSTRAINT user_sales_relation FOREIGN KEY($_salesColumnUserID) REFERENCES $_userTable($_userColumnID) ON DELETE CASCADE ON UPDATE CASCADE ," "CONSTRAINT product_sales_relation FOREIGN KEY($_salesColumnProductID) REFERENCES $_productTable($_productColumnID) ON DELETE CASCADE ON UPDATE CASCADE  ");');
   }
 
   @override
@@ -93,12 +97,12 @@ class MySqlFliteDatabase extends Crud {
     return select(tableName: _userTable);
   }
 
-  // Future<List<Map<String, Object?>>> selectSalesTableData() async {
-  //   return select(tableName: _salesTable);
-  // }
 
   Future<List<Map<String, Object?>>> selectProductTableData() async {
     return select(tableName: _productTable);
+  }
+  Future<List<Map<String, Object?>>> sales() async {
+    return select(tableName: _salesTable);
   }
 
   @override
