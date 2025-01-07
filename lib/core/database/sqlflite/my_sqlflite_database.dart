@@ -21,18 +21,23 @@ class MySqlFliteDatabase extends Crud {
     String databasePath = await sqfliteDataBase.getDatabasesPath();
     String managamentDataBaseName = 'managament.db';
     String realDatabasePath = join(databasePath, managamentDataBaseName);
-    int versionDataBase = 2;
+    int versionDataBase = 4;
     _db ??= await sqfliteDataBase.openDatabase(realDatabasePath,
-    onOpen: (db) async{
+        onOpen: (db) async {
       await db.execute("PRAGMA foreign_keys = ON");
-      
-    },
-        onCreate: _onCreate, onUpgrade: (db, int oldVersion, int newVersion) {
-      // print(db);
-      // print(oldVersion);
-      // print(newVersion);
-    }, version: versionDataBase);
+    }, onCreate: _onCreate, onUpgrade: _onUpgrade, version: versionDataBase);
     return _db!;
+  }
+
+  _onUpgrade(
+      sqfliteDataBase.Database db, int oldVersion, int newVersion) async {
+    print(db);
+    print(oldVersion);
+    print(newVersion);
+    // await db.execute(
+    //   'CREATE TABLE IF NOT EXISTS testTable (id INTEGER) ;',
+    // );
+    // await db.execute("ALTER TABLE testTable RENAME TO TTT");
   }
 
   _onCreate(sqfliteDataBase.Database db, int version) async {
@@ -97,10 +102,10 @@ class MySqlFliteDatabase extends Crud {
     return select(tableName: _userTable);
   }
 
-
   Future<List<Map<String, Object?>>> selectProductTableData() async {
     return select(tableName: _productTable);
   }
+
   Future<List<Map<String, Object?>>> sales() async {
     return select(tableName: _salesTable);
   }
